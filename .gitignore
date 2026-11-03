@@ -1,0 +1,11 @@
+/build/
+/.vscode/
+
+/*
+
+!/.gitignore
+!/CMakeLists.txt
+!/include/
+!/include/**
+!/src/
+!/src/**
