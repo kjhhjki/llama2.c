@@ -1,15 +1,12 @@
-#ifndef LLAMA_KERNEL_CPU_ROPE_H
-#define LLAMA_KERNEL_CPU_ROPE_H
-
+#pragma once
 #include "core/tensor.h"
-
-#ifdef CUDA
-#else   // CUDA
+#include "kernel/functional.h"
 
 namespace kernel 
 { 
-    void rope(Vector<bf16>::ViewType); 
-}
-
-#endif  // CUDA
-#endif
+    void rope(
+        Vector<bf16>::ViewType, 
+        Vector<bf16>::ViewType,
+        const RopeCoefficients&
+    ) noexcept;
+} 

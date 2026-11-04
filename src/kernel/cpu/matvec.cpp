@@ -1,13 +1,12 @@
 #include "kernel/cpu/matvec.h"
-#include <stdexcept>
-#include <omp.h>
 
-void kernel::matvec(Vector<bf16>::ViewType o, const Matrix<bf16>::ConstViewType A, const Vector<bf16>::ConstViewType x) {
+void kernel::matvec(
+    Vector<bf16>::ViewType o, 
+    const Matrix<bf16>::ConstViewType A, 
+    const Vector<bf16>::ConstViewType x
+) {
     const size_t m = A.extent(0);
     const size_t n = A.extent(1);
-    if (x.size() != n || o.size() != m) {
-        throw std::invalid_argument("Matrix-vector dimensions do not match.");
-    }
     #pragma omp parallel for
     for (size_t i = 0; i < m; ++i) {
         f32 sum = 0.0f;
@@ -16,4 +15,4 @@ void kernel::matvec(Vector<bf16>::ViewType o, const Matrix<bf16>::ConstViewType 
         }
         o[i] = static_cast<bf16>(sum);
     }
-}
+} 

@@ -1,11 +1,10 @@
-#ifndef LLAMA_OPS_SOFTMAX_H
-#define LLAMA_OPS_SOFTMAX_H
-
+#pragma once
 #include "core/tensor.h"
 
 #ifdef CUDA
 #else   // CUDA
-void softmax(Vector<bf16>&);
+
+void softmax(Vector<f32>&);
 
 #endif  // CUDA
-#endif  // LLAMA_OPS_SOFTMAX_H
+ 

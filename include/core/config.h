@@ -1,7 +1,6 @@
-#ifndef LLAMA_CORE_CONFIG_H
-#define LLAMA_CORE_CONFIG_H
-
-class Config {
+#pragma once
+class Config 
+{
 public:
     constexpr Config(int dim, int hidden_dim, int n_layers, 
                      int n_heads, int n_kv_heads, 
@@ -18,7 +17,7 @@ public:
     constexpr int get_vocab_size() const { return vocab_size; }
     constexpr int get_seq_len() const { return seq_len; }
     constexpr int get_head_size() const { return dim / n_heads; }
-    constexpr int get_kv_dim() const { return (dim * n_kv_heads) / n_heads; }
+    constexpr int get_kv_dim() const { return (dim / n_heads) * n_kv_heads; }
     constexpr int get_kv_mul() const { return n_heads / n_kv_heads; } // integer multiplier of the kv sharing in multiquery
 
 private:
@@ -30,5 +29,3 @@ private:
     int vocab_size;     // vocabulary size, usually 256 (byte-level)
     int seq_len;        // max sequence length
 };
-
-#endif  // LLAMA_CORE_CONFIG_H
