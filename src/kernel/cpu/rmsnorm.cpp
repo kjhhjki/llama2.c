@@ -1,4 +1,5 @@
 #include "kernel/cpu/rmsnorm.h"
+#include "kernel/functional.h"
 #include <cmath>
 #include <omp.h>
 
@@ -13,8 +14,7 @@ void kernel::rmsnorm(
         const f32 xi = static_cast<f32>(x[i]);
         s += xi * xi;
     }
-    constexpr bf16 eps = 1e-5f;
-    s = 1.f / std::sqrt(s / n + eps);
+    s = 1.f / std::sqrt(s / static_cast<f32>(n) + eps);
     for (size_t i = 0; i < n; ++i) {
         o[i] = static_cast<bf16>(x[i] * s * w[i]);
     }

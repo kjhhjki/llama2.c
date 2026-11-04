@@ -1,11 +1,14 @@
 #pragma once
 #include "core/tensor.h"
+#include "core/types.h"
 #include <utility>
 
 #ifdef CUDA
 #else  // CUDA
 namespace kernel
 {
+
+constexpr f32 eps = 1e-5f;
 struct RopeCoefficients {
     size_t head_size;
 

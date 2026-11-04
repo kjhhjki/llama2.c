@@ -1,4 +1,6 @@
 #pragma once
+#include <stdexcept>
+
 class Config 
 {
 public:
@@ -7,7 +9,21 @@ public:
                      int vocab_size, int seq_len)
         : dim(dim), hidden_dim(hidden_dim), n_layers(n_layers), 
           n_heads(n_heads), n_kv_heads(n_kv_heads), 
-          vocab_size(vocab_size), seq_len(seq_len) {}
+          vocab_size(vocab_size), seq_len(seq_len) {
+            if (n_heads <= 0 || n_kv_heads <= 0 || dim <= 0 || hidden_dim <= 0 || 
+                n_layers <= 0 || vocab_size <= 0 || seq_len <= 0 ) {
+                throw std::invalid_argument("All configuration parameters must be positive integers");
+            }
+            if (dim % n_heads != 0) {
+                throw std::invalid_argument("dim must be divisible by n_heads");
+            }
+            if (dim % n_kv_heads != 0) {
+                throw std::invalid_argument("dim must be divisible by n_kv_heads");
+            }
+            if (n_heads % n_kv_heads != 0) {
+                throw std::invalid_argument("n_heads must be divisible by n_kv_heads");
+            }
+        }
 
     constexpr int get_dim() const { return dim; }
     constexpr int get_hidden_dim() const { return hidden_dim; }

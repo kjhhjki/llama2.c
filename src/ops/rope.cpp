@@ -4,11 +4,9 @@
 std::vector<f32> makeRopeFrequencies(size_t head_size)
 {
     const size_t half = head_size / 2;
-#ifdef CHECK_BOUNDS
     if (head_size == 0 || head_size % 2 != 0) {
         throw std::invalid_argument("Head size must be a positive even number");
     }
-#endif
     std::vector<f32> freqs(half);
     for (size_t i = 0; i < half; ++i) {
         const f32 exponent = -2.0f * static_cast<f32>(i) /
@@ -23,12 +21,10 @@ void makeRopeCoefficients(
     std::span<const f32> freqs
 ) {
     const size_t half = coef.head_size / 2;
-#ifdef CHECK_BOUNDS
     if (coef.head_size == 0 || coef.head_size % 2 != 0 ||
         freqs.size() != half || coef.cos.size() != half || coef.sin.size() != half) {
         throw std::invalid_argument("Invalid RoPE coefficients");
     }
-#endif
     for (size_t i = 0; i < half; ++i) {
         const f32 theta = static_cast<f32>(pos) * freqs[i];
         coef.cos[i] = std::cos(theta);
